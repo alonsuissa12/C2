@@ -33,54 +33,62 @@ void scanMatrix(int m [10][10] ) {
     return;
 }
 void shortestPath(int i, int j, int m [10][10] ,int visitCounter, int *visited , int *pathLength, int  *previos){
-
+    printf("%d" , i);
     if(visitCounter == 10){
         return;
     }
     visited[i] = 1;
-    int minIndex = 0;
-    int nextOptions = 0;
-
     int counter = 0;
     for(int j = 0; j < 10 ; j++){
         if( (m[i][j] != 0) && (visited[j] == 0) ){
             counter ++ ;
         }
     }
-    if(counter == 0) {
+    int neighbors [counter];
+    neighborsToVisit(i, m, visited, neighbors);
+    updateLengthAndPrev( i , m, pathLength, previos);
+    int next = nextNode(neighbors, pathLength,  counter);
+    if(next == -1){
         return;
     }
-    int neighbors [counter];
-    neighborsToVisit(i, m, visited, neighbors , pathLength, previos);
-    for(int k = 0; k < counter; k++ ) {
-        int neighbor = neighbors[k];
-            if ( ( (m[i][neighbor]) < m[i][minIndex] ) ) {
-                minIndex = neighbor;
-            }
-            if ((pathLength[i] + m[i][neighbor] < pathLength[neighbor]) || (pathLength[neighbor] == -1)) {
-                pathLength[neighbor] = pathLength[i] + m[i][neighbor];
-                previos[neighbor] = i;
-            }
-    }
-    return shortestPath( minIndex, j, m, visitCounter+1 , visited, pathLength , previos);
+    return shortestPath( next, j, m, visitCounter+1 , visited, pathLength , previos);
 }
 
-void neighborsToVisit(int i , int m[10][10], int *visited, int *neighbors, int *pathLength, int *previos){
+void neighborsToVisit(int i , int m[10][10], int *visited, int *neighbors){
     int counter = 0;
     for(int j = 0; j < 10 ; j++) {
         if (m[i][j] != 0) {
             if(visited[j] == 0) {
                 neighbors[counter] = j;
-                counter ++;
-            }
-            else{
-                if (pathLength[i] + m[i][j] < pathLength[j] ) {
-                    pathLength[j] = pathLength[i] + m[i][j];
-                    previos[j] = i;
-                }
+                counter++;
             }
         }
     }
+}
+
+void updateLengthAndPrev(int i , int m[10][10], int *pathLength, int *previos){
+    for(int j = 0; j < 10; j++) {
+        if (m[i][j] != 0) {
+            int neighbor = j;
+            if ((pathLength[neighbor] == -1) || (pathLength[i] + m[i][neighbor] < pathLength[neighbor])) {
+                pathLength[neighbor] = pathLength[i] + m[i][neighbor];
+                previos[neighbor] = i;
+            }
+        }
+    }
+}
+int nextNode(int *neighbors, int *pathLength, int neighborsLength){
+    if(neighborsLength == 0){
+        return -1;
+    }
+    int next = neighbors[0];
+    for(int i = 1; i < neighborsLength; i++ ){
+        int neighbor = neighbors[i];
+        if(pathLength[neighbor] < pathLength[next] ){
+            next = neighbor;
+        }
+    }
+    return next;
 }
 
 //int min(int a , int b){

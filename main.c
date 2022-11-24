@@ -29,15 +29,20 @@ int main(){
             }
         }
         if (flag == 'C') {
-            scanf("%d%d", &i, &j);
+            printf("a");
+           //scanf("%d%d", &i, &j);
+           i=1;
+           j=3;
             int visited [] = {0,0,0,0,0,0,0,0,0,0,0};
             int pathLength [] = {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1};
             int previos [] = {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1};
             pathLength[i] = 0;
+            printf("b");
             shortestPath(i , j , m , 1 , visited ,pathLength, previos);
             if(previos[j] == -1){
                 return -1;
             }
+            printf("the path is: ");
             char track [9];
             int node = j;
             int index = 0;
