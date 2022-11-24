@@ -33,7 +33,11 @@ int main(){
             int visited [] = {0,0,0,0,0,0,0,0,0,0,0};
             int pathLength [] = {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1};
             int previos [] = {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1};
+            pathLength[i] = 0;
             shortestPath(i , j , m , 1 , visited ,pathLength, previos);
+            if(previos[j] == -1){
+                return -1;
+            }
             char track [9];
             int node = j;
             int index = 0;
@@ -59,4 +63,5 @@ int main(){
             }
         }
     }
+    printf("\n");
 }

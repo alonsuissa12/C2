@@ -37,30 +37,52 @@ void shortestPath(int i, int j, int m [10][10] ,int visitCounter, int *visited ,
     if(visitCounter == 10){
         return;
     }
-
-    pathLength[i] = 0;
     visited[i] = 1;
     int minIndex = 0;
-    int check0 = -1;
-    for(int k = 0; k < 10; k++ ) {
-        if (m[i][k] != 0) {
-                check0 = 1;
-                if ( ( (m[i][k]) < m[i][minIndex] ) && (visited[k] == 0) ) {
-                    minIndex = k;
-                }
-                if ((pathLength[i] + m[i][k] < pathLength[k]) || (pathLength[k] == -1)) {
-                    pathLength[k] = pathLength[i] + m[i][k];
-                    previos[k] = i;
-                }
+    int nextOptions = 0;
+
+    int counter = 0;
+    for(int j = 0; j < 10 ; j++){
+        if( (m[i][j] != 0) && (visited[j] == 0) ){
+            counter ++ ;
         }
     }
-    if(check0 != -1) {
-       return shortestPath( minIndex, j, m, visitCounter+1 , visited, pathLength , previos);
-    }
-    else{
+    if(counter == 0) {
         return;
     }
+    int neighbors [counter];
+    neighborsToVisit(i, m, visited, neighbors , pathLength, previos);
+    for(int k = 0; k < counter; k++ ) {
+        int neighbor = neighbors[k];
+            if ( ( (m[i][neighbor]) < m[i][minIndex] ) ) {
+                minIndex = neighbor;
+            }
+            if ((pathLength[i] + m[i][neighbor] < pathLength[neighbor]) || (pathLength[neighbor] == -1)) {
+                pathLength[neighbor] = pathLength[i] + m[i][neighbor];
+                previos[neighbor] = i;
+            }
+    }
+    return shortestPath( minIndex, j, m, visitCounter+1 , visited, pathLength , previos);
 }
+
+void neighborsToVisit(int i , int m[10][10], int *visited, int *neighbors, int *pathLength, int *previos){
+    int counter = 0;
+    for(int j = 0; j < 10 ; j++) {
+        if (m[i][j] != 0) {
+            if(visited[j] == 0) {
+                neighbors[counter] = j;
+                counter ++;
+            }
+            else{
+                if (pathLength[i] + m[i][j] < pathLength[j] ) {
+                    pathLength[j] = pathLength[i] + m[i][j];
+                    previos[j] = i;
+                }
+            }
+        }
+    }
+}
+
 //int min(int a , int b){
 //    if (a > b){
 //        return b;
