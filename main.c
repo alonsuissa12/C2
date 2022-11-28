@@ -52,7 +52,6 @@ int main(){
                     int pathLength[] = {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1};
                     pathLength[i] = 0;
                     shortestPath(i, j, m, 1, visited, pathLength);
-                    //char pathLengthChar = pathLength[j] + '0';
                     printf("%d\n", pathLength[j]);
                 }
             }
