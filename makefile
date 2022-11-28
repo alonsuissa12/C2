@@ -1,8 +1,17 @@
-main.exe:main.o my_mat.o
-	gcc main.o my_mat.o -o main.exe
+CC = gcc
+FLAGS = -Wall -g
+connections:main.o libmy_mat.a
+	$(CC) $(FLAGS) main.o libmy_mat.a -o connections
 main.o:main.c my_mat.h
-	gcc -c main.c -o main.o
+	$(CC) $(FLAGS) -c main.c -o main.o
 my_mat.o: my_mat.h my_mat.c
-	gcc -c my_mat.c -o my_mat.o
-all: main.exe main.o my_mat.o
-.PHONEY: all
+	$(CC) $(FLAGS) -c my_mat.c -o my_mat.o
+libmy_mat.a:my_mat.o
+	ar -rcs libmy_mat.a my_mat.o
+all: connections main.o libmy_mat.a
+clean:
+	rm -f *.o
+	rm connections
+.PHONEY: all clean
+
+# -WALL !!!!!

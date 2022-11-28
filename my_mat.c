@@ -32,15 +32,14 @@ void scanMatrix(int m [10][10] ) {
 
     return;
 }
-void shortestPath(int i, int j, int m [10][10] ,int visitCounter, int *visited , int *pathLength, int  *previos){
-    printf("%d" , i);
+void shortestPath(int i, int j, int m [10][10] ,int visitCounter, int *visited , int *pathLength, int  *previos){ //need to fix case that there is no path from i to j.
     if(visitCounter == 10){
         return;
     }
     visited[i] = 1;
     int counter = 0;
-    for(int j = 0; j < 10 ; j++){
-        if( (m[i][j] != 0) && (visited[j] == 0) ){
+    for(int k = 0; k < 10 ; k++){
+        if( (m[i][k] != 0) && (visited[k] == 0) ){
             counter ++ ;
         }
     }
@@ -90,10 +89,3 @@ int nextNode(int *neighbors, int *pathLength, int neighborsLength){
     }
     return next;
 }
-
-//int min(int a , int b){
-//    if (a > b){
-//        return b;
-//    }
-//    return a;
-//}

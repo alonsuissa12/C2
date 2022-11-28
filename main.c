@@ -9,12 +9,11 @@ int main(){
     while (flag != 'D') {
         scanf("%c", &flag);
         int m[10][10];
-
+        int copy[10][10];
         if (flag == 'A') {
             scanMatrix(m);
         }
         if (flag == 'B') {
-            int copy[10][10];
             for (int k = 0; k < 10; k++) {
                 for (int t = 0; t < 10; t++) {
                     copy[k][t] = m[k][t];
@@ -23,40 +22,34 @@ int main(){
             scanf("%d%d", &i, &j);
             int exist = pathExistence(copy, i, j);
             if (exist == 1) {
-                printf("True");
+                printf("True\n");
             } else {
-                printf("False");
+                printf("False\n");
             }
         }
         if (flag == 'C') {
-            printf("a");
-           //scanf("%d%d", &i, &j);
-           i=1;
-           j=3;
-            int visited [] = {0,0,0,0,0,0,0,0,0,0,0};
-            int pathLength [] = {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1};
-            int previos [] = {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1};
-            pathLength[i] = 0;
-            printf("b");
-            shortestPath(i , j , m , 1 , visited ,pathLength, previos);
-            if(previos[j] == -1){
-                return -1;
+           scanf("%d%d", &i, &j);
+              for (int k = 0; k < 10; k++) {
+                for (int t = 0; t < 10; t++) {
+                    copy[k][t] = m[k][t];
+                }
             }
-            printf("the path is: ");
-            char track [9];
-            int node = j;
-            int index = 0;
-            while (node != i){
-                track[index] = node + '0';
-                index ++;
-                node = previos[node];
-            }
-            index--;
-            char c = i + '0';
-            printf("%c" , c);
-            for(;index >= 0; index--) {
-                printf(" %c" , track[index]);
-            }
+           int exist = pathExistence(copy, i, j);
+           if(exist == 0){
+               printf("-1\n");
+           }
+           else {
+               int visited[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+               int pathLength[] = {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1};
+               int previos[] = {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1};
+               pathLength[i] = 0;
+               shortestPath(i, j, m, 1, visited, pathLength, previos);
+//               if (previos[j] == -1) {
+//                   printf("-1\n");
+//               }
+               char pathLengthChar = pathLength[j] + '0';
+               printf("%c", pathLengthChar);
+           }
         }
 
         if (flag == 'P') {
@@ -68,5 +61,6 @@ int main(){
             }
         }
     }
-    printf("\n");
+
+    return 0;
 }
