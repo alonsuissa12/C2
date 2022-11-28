@@ -32,7 +32,7 @@ void scanMatrix(int m [10][10] ) {
 
     return;
 }
-void shortestPath(int i, int j, int m [10][10] ,int visitCounter, int *visited , int *pathLength, int  *previos){ //need to fix case that there is no path from i to j.
+void shortestPath(int i, int j, int m [10][10] ,int visitCounter, int *visited , int *pathLength){ //need to fix case that there is no path from i to j.
     if(visitCounter == 10){
         return;
     }
@@ -45,12 +45,12 @@ void shortestPath(int i, int j, int m [10][10] ,int visitCounter, int *visited ,
     }
     int neighbors [counter];
     neighborsToVisit(i, m, visited, neighbors);
-    updateLengthAndPrev( i , m, pathLength, previos);
+    updateLength( i , m, pathLength);
     int next = nextNode(neighbors, pathLength,  counter);
     if(next == -1){
         return;
     }
-    return shortestPath( next, j, m, visitCounter+1 , visited, pathLength , previos);
+    return shortestPath( next, j, m, visitCounter+1 , visited, pathLength );
 }
 
 void neighborsToVisit(int i , int m[10][10], int *visited, int *neighbors){
@@ -65,13 +65,12 @@ void neighborsToVisit(int i , int m[10][10], int *visited, int *neighbors){
     }
 }
 
-void updateLengthAndPrev(int i , int m[10][10], int *pathLength, int *previos){
+void updateLength(int i , int m[10][10], int *pathLength){
     for(int j = 0; j < 10; j++) {
         if (m[i][j] != 0) {
             int neighbor = j;
             if ((pathLength[neighbor] == -1) || (pathLength[i] + m[i][neighbor] < pathLength[neighbor])) {
                 pathLength[neighbor] = pathLength[i] + m[i][neighbor];
-                previos[neighbor] = i;
             }
         }
     }
