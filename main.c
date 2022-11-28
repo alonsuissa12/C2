@@ -6,10 +6,10 @@
 int main(){
     char flag = 's';
     int i, j;
+    int m[10][10];
+    int copy[10][10];
     while (flag != 'D') {
         scanf("%c", &flag);
-        int m[10][10];
-        int copy[10][10];
         if (flag == 'A') {
             scanMatrix(m);
         }
