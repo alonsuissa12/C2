@@ -26,9 +26,9 @@ void scanMatrix(int m [10][10] ) {
         for (int j = 0; j < 10; j++) {
            scanf("%d", &m[i][j]);
         }
-        printf("CHECK\n");
+        //printf("CHECK\n");
     }
-    printf("DONE\n");
+   // printf("DONE\n");
 
     return;
 }
