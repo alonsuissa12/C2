@@ -11,7 +11,7 @@ int main(){
     while (flag != 'D') {
         scanf("%c", &flag);
         if (flag == 'A') {
-            //scanMatrix(m);
+            scanMatrix(m);
         }
         if (flag == 'B') {
             for (int k = 0; k < 10; k++) {
@@ -35,7 +35,7 @@ int main(){
         if (flag == 'C') {
             scanf("%d%d", &i, &j);
             if (i == j) {
-                printf("-1\n");
+                printf("%d\n", -1);
             }
             else
             {
@@ -46,14 +46,14 @@ int main(){
                 }
                 int exist = pathExistence(copy, i, j);
                 if (exist == 0) {
-                    printf("-1\n");
+                    printf("%d\n", -1);
                 } else {
                     int visited[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
                     int pathLength[] = {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1};
                     pathLength[i] = 0;
                     shortestPath(i, j, m, 1, visited, pathLength);
-                    char pathLengthChar = pathLength[j] + '0';
-                    printf("%c\n", pathLengthChar);
+                    //char pathLengthChar = pathLength[j] + '0';
+                    printf("%d\n", pathLength[j]);
                 }
             }
         }
