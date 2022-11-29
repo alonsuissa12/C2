@@ -3,12 +3,15 @@
 //
 #include <stdio.h>
 #include "my_mat.h"
-int pathExistence(int m[10][10] , int i, int j){
+#ifndef ARRAY_LENGTH_AND_WIDTH
+#define ARRAY_LENGTH_AND_WIDTH 10
+#endif
+int pathExistence(int m[ARRAY_LENGTH_AND_WIDTH][ARRAY_LENGTH_AND_WIDTH] , int i, int j){
     if(i == j){
         return 1;
     }
     int ans;
-    for( int lineI = 0; lineI < 10; lineI++){
+    for( int lineI = 0; lineI < ARRAY_LENGTH_AND_WIDTH; lineI++){
         if(m[i][lineI] != 0) {
             m[lineI][i] = 0;
             m[i][lineI] = 0;
@@ -21,9 +24,9 @@ int pathExistence(int m[10][10] , int i, int j){
     return 0;
 }
 
-void scanMatrix(int m [10][10] ) {
-    for (int i = 0; i < 10; i++) {
-        for (int j = 0; j < 10; j++) {
+void scanMatrix(int m [ARRAY_LENGTH_AND_WIDTH][ARRAY_LENGTH_AND_WIDTH] ) {
+    for (int i = 0; i < ARRAY_LENGTH_AND_WIDTH; i++) {
+        for (int j = 0; j < ARRAY_LENGTH_AND_WIDTH; j++) {
            scanf("%d", &m[i][j]);
         }
         //printf("CHECK\n");
@@ -32,13 +35,13 @@ void scanMatrix(int m [10][10] ) {
 
     return;
 }
-void shortestPath(int i, int j, int m [10][10] ,int visitCounter, int *visited , int *pathLength){ //need to fix case that there is no path from i to j.
-    if(visitCounter == 10){
+void shortestPath(int i, int j, int m [ARRAY_LENGTH_AND_WIDTH][ARRAY_LENGTH_AND_WIDTH] ,int visitCounter, int *visited , int *pathLength){
+    if(visitCounter == ARRAY_LENGTH_AND_WIDTH){
         return;
     }
     visited[i] = 1;
     int counter = 0;
-    for(int k = 0; k < 10 ; k++){
+    for(int k = 0; k < ARRAY_LENGTH_AND_WIDTH ; k++){
         if( (m[i][k] != 0) && (visited[k] == 0) ){
             counter ++ ;
         }
@@ -53,9 +56,9 @@ void shortestPath(int i, int j, int m [10][10] ,int visitCounter, int *visited ,
     return shortestPath( next, j, m, visitCounter+1 , visited, pathLength );
 }
 
-void neighborsToVisit(int i , int m[10][10], int *visited, int *neighbors){
+void neighborsToVisit(int i , int m[ARRAY_LENGTH_AND_WIDTH][ARRAY_LENGTH_AND_WIDTH], int *visited, int *neighbors){
     int counter = 0;
-    for(int j = 0; j < 10 ; j++) {
+    for(int j = 0; j < ARRAY_LENGTH_AND_WIDTH ; j++) {
         if (m[i][j] != 0) {
             if(visited[j] == 0) {
                 neighbors[counter] = j;
@@ -65,8 +68,8 @@ void neighborsToVisit(int i , int m[10][10], int *visited, int *neighbors){
     }
 }
 
-void updateLength(int i , int m[10][10], int *pathLength){
-    for(int j = 0; j < 10; j++) {
+void updateLength(int i , int m[ARRAY_LENGTH_AND_WIDTH][ARRAY_LENGTH_AND_WIDTH], int *pathLength){
+    for(int j = 0; j < ARRAY_LENGTH_AND_WIDTH; j++) {
         if (m[i][j] != 0) {
             int neighbor = j;
             if ((pathLength[neighbor] == -1) || (pathLength[i] + m[i][neighbor] < pathLength[neighbor])) {
