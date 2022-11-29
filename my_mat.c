@@ -8,7 +8,7 @@
 #endif
 
 /*
-* The function is checking if there is a path from i to j.
+* boolean function that returns 1 if there is a path from i to j, and 0 otherwise.
 *@param  m : The matrix
 *@param i , j : indexes
 */
@@ -38,20 +38,20 @@ void scanMatrix(int m [ARRAY_LENGTH_AND_WIDTH][ARRAY_LENGTH_AND_WIDTH] ) {
         for (int j = 0; j < ARRAY_LENGTH_AND_WIDTH; j++) {
            scanf("%d", &m[i][j]);
         }
-        //printf("CHECK\n");
+
     }
-   // printf("DONE\n");
 
     return;
 }
 /*
-*The function checks what is the shortest path from i to j, 
-* it's upgrades the "neighbors" array and "pathLength" arrays
+*The function checks the shortest path from i to any other node,
+* it's update that information in the "pathLength" array.
 *
 *@param  m : The matrix
-*@param i , j : indexes
-*@param visitCounter : 
-*@param *visited: array which told us if we have checked this index or not yet 
+*@param i: start index.
+ *@param j:end index.
+*@param visitCounter : counter of how many nodes we have already visited.
+*@param *visited: array which told us if we have already visited this node or not.
 *@param *pathLength:  the path length until now.
 * 
 */
@@ -76,14 +76,12 @@ void shortestPath(int i, int j, int m [ARRAY_LENGTH_AND_WIDTH][ARRAY_LENGTH_AND_
     return shortestPath( next, j, m, visitCounter+1 , visited, pathLength );
 }
 /*
-*this function upgrades the "neighbors" array.
-*such that every index we want to check will be in "neighbors" and in his place 
-*in the mat will be zero.
+*this function update the "neighbors" array with all unvisited neighbors of i.
 *
 *@param i : the index we wanted a path from him to j
 *@param m : the matrix 
-*@param *visited: array which told us if we have checked this index or not yet  
-*@param *neighbors : the neighbors array include all the indexes we can arrive to them from i 
+*@param *visited: array which told us if we have already visited this node or not.
+*@param *neighbors : at the end of the function the neighbors array will  include all the unvisited neighbors of i.
 */
 void neighborsToVisit(int i , int m[ARRAY_LENGTH_AND_WIDTH][ARRAY_LENGTH_AND_WIDTH], int *visited, int *neighbors){
     int counter = 0;
@@ -98,8 +96,8 @@ void neighborsToVisit(int i , int m[ARRAY_LENGTH_AND_WIDTH][ARRAY_LENGTH_AND_WID
 }
 
 /*
-*This function upgrades the length of the path.
-*
+*This function update the length of the path from the start to every neighbor of i, and updating pathLength array with this information.
+ *
 *@param i : the index we wanted a path from him to j.
 *@param m : the matrix .
 *@param *pathLength : the path length until now.
@@ -115,11 +113,11 @@ void updateLength(int i , int m[ARRAY_LENGTH_AND_WIDTH][ARRAY_LENGTH_AND_WIDTH],
     }
 }
 /*
-*this function return the next node we should go for the shortest way from i to j
+*this function return the next node we should go next (by dijxtra algorithm definition).
 *
-*param *neighbors : the "neighbors" array include all the indexes we can arrive to them from i 
-*@param *pathLength : the length until now.
-*@param neighborsLength:
+*param *neighbors : the "neighbors" array include all the unvisited neighbors of i
+*@param *pathLength : array that represent the length of the shortest path from the start node to every other node (until now).
+*@param neighborsLength: the length of the neighbors array.
 */
 int nextNode(int *neighbors, int *pathLength, int neighborsLength){
     if(neighborsLength == 0){
