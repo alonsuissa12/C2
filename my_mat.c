@@ -6,6 +6,12 @@
 #ifndef ARRAY_LENGTH_AND_WIDTH
 #define ARRAY_LENGTH_AND_WIDTH 10
 #endif
+
+/*
+* The function is checking if there is a path from i to j.
+*@param  m : The matrix
+*@param i , j : indexes
+*/
 int pathExistence(int m[ARRAY_LENGTH_AND_WIDTH][ARRAY_LENGTH_AND_WIDTH] , int i, int j){
     if(i == j){
         return 1;
@@ -23,7 +29,10 @@ int pathExistence(int m[ARRAY_LENGTH_AND_WIDTH][ARRAY_LENGTH_AND_WIDTH] , int i,
     }
     return 0;
 }
-
+/*
+*that function read the matrix from the user.
+*@param  m : The matrix
+*/
 void scanMatrix(int m [ARRAY_LENGTH_AND_WIDTH][ARRAY_LENGTH_AND_WIDTH] ) {
     for (int i = 0; i < ARRAY_LENGTH_AND_WIDTH; i++) {
         for (int j = 0; j < ARRAY_LENGTH_AND_WIDTH; j++) {
@@ -35,6 +44,17 @@ void scanMatrix(int m [ARRAY_LENGTH_AND_WIDTH][ARRAY_LENGTH_AND_WIDTH] ) {
 
     return;
 }
+/*
+*The function checks what is the shortest path from i to j, 
+* it's upgrades the "neighbors" array and "pathLength" arrays
+*
+*@param  m : The matrix
+*@param i , j : indexes
+*@param visitCounter : 
+*@param *visited: array which told us if we have checked this index or not yet 
+*@param *pathLength:  the path length until now.
+* 
+*/
 void shortestPath(int i, int j, int m [ARRAY_LENGTH_AND_WIDTH][ARRAY_LENGTH_AND_WIDTH] ,int visitCounter, int *visited , int *pathLength){
     if(visitCounter == ARRAY_LENGTH_AND_WIDTH){
         return;
@@ -55,7 +75,16 @@ void shortestPath(int i, int j, int m [ARRAY_LENGTH_AND_WIDTH][ARRAY_LENGTH_AND_
     }
     return shortestPath( next, j, m, visitCounter+1 , visited, pathLength );
 }
-
+/*
+*this function upgrades the "neighbors" array.
+*such that every index we want to check will be in "neighbors" and in his place 
+*in the mat will be zero.
+*
+*@param i : the index we wanted a path from him to j
+*@param m : the matrix 
+*@param *visited: array which told us if we have checked this index or not yet  
+*@param *neighbors : the neighbors array include all the indexes we can arrive to them from i 
+*/
 void neighborsToVisit(int i , int m[ARRAY_LENGTH_AND_WIDTH][ARRAY_LENGTH_AND_WIDTH], int *visited, int *neighbors){
     int counter = 0;
     for(int j = 0; j < ARRAY_LENGTH_AND_WIDTH ; j++) {
@@ -68,6 +97,13 @@ void neighborsToVisit(int i , int m[ARRAY_LENGTH_AND_WIDTH][ARRAY_LENGTH_AND_WID
     }
 }
 
+/*
+*This function upgrades the length of the path.
+*
+*@param i : the index we wanted a path from him to j.
+*@param m : the matrix .
+*@param *pathLength : the path length until now.
+*/
 void updateLength(int i , int m[ARRAY_LENGTH_AND_WIDTH][ARRAY_LENGTH_AND_WIDTH], int *pathLength){
     for(int j = 0; j < ARRAY_LENGTH_AND_WIDTH; j++) {
         if (m[i][j] != 0) {
@@ -78,6 +114,13 @@ void updateLength(int i , int m[ARRAY_LENGTH_AND_WIDTH][ARRAY_LENGTH_AND_WIDTH],
         }
     }
 }
+/*
+*this function return the next node we should go for the shortest way from i to j
+*
+*param *neighbors : the "neighbors" array include all the indexes we can arrive to them from i 
+*@param *pathLength : the length until now.
+*@param neighborsLength:
+*/
 int nextNode(int *neighbors, int *pathLength, int neighborsLength){
     if(neighborsLength == 0){
         return -1;
